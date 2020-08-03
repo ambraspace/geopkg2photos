@@ -5,4 +5,11 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>geopkg2photos</name>
   <description>Extract binary photos from Geopackage file</description>
+  <dependencies>
+  	<dependency>
+  		<groupId>org.xerial</groupId>
+  		<artifactId>sqlite-jdbc</artifactId>
+  		<version>3.25.2</version>
+  	</dependency>
+  </dependencies>
 </project>

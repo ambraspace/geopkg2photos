@@ -39,6 +39,8 @@ public class Main
 			{
 				imName = rs.getString("UUID");
 				im = rs.getBytes("photo");
+				if (im == null || im.length==0)
+						continue;
 				System.out.println("Saving " + imName + ".jpg");
 				FileOutputStream fos = new FileOutputStream(imName + ".jpg");
 				fos.write(im);

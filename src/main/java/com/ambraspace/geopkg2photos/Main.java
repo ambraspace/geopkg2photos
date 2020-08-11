@@ -1,5 +1,6 @@
 package com.ambraspace.geopkg2photos;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -30,19 +31,22 @@ public class Main
 			Class.forName("org.sqlite.JDBC");
 	
 			c = DriverManager.getConnection("jdbc:sqlite:" + fileName);
+			
+			String shortFileName = new File(fileName).getName();
+			shortFileName = shortFileName.substring(0, shortFileName.lastIndexOf(".")).trim();
 
 			Statement query = c.createStatement();
 			ResultSet rs = query.executeQuery("SELECT * FROM Photos");
-			String imName;
+			long rowId;
 			byte[] im;
 			while (rs.next())
 			{
-				imName = rs.getString("UUID");
+				rowId = rs.getLong("ID");
 				im = rs.getBytes("photo");
 				if (im == null || im.length==0)
 						continue;
-				System.out.println("Saving " + imName + ".jpg");
-				FileOutputStream fos = new FileOutputStream(imName + ".jpg");
+				System.out.println("Saving " + shortFileName + "-" + rowId + ".jpg");
+				FileOutputStream fos = new FileOutputStream(shortFileName + "-" + rowId + ".jpg");
 				fos.write(im);
 				fos.close();
 			}
